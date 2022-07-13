@@ -1,11 +1,13 @@
 package br.com.MyProjectsApp.Model;
 
 import br.com.MyProjectsApp.Model.Employers.Desenvolvedor;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "task")
+@Data
 public class Task {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
