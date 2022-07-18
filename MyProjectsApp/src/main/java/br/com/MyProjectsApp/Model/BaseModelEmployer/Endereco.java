@@ -3,15 +3,12 @@ package br.com.MyProjectsApp.Model.BaseModelEmployer;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
 
 @Data
-@Entity
+@Embeddable
 public class Endereco {
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
 
     private String cep;
     private String logradouro;

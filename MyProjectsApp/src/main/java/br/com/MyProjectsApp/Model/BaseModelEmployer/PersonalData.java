@@ -7,22 +7,13 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
-@Entity
+@Embeddable
 public class PersonalData {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+
     private String name;
     private String cpf;
-    @OneToOne
-    @JoinColumn(name = "endereco_id")
+    @Embedded
     private Endereco endereco;
     private LocalDate dataDeNascimento;
-    @OneToOne
-    private Employer employer;
 
-
-    public PersonalData() {
-    }
 }

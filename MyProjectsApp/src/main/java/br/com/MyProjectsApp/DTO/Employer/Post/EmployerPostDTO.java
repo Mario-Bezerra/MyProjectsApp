@@ -1,7 +1,7 @@
-package br.com.MyProjectsApp.Service.DTO.Employer.Post;
+package br.com.MyProjectsApp.DTO.Employer.Post;
 
-import br.com.MyProjectsApp.Service.DTO.Employer.PersonalDataDto;
-import br.com.MyProjectsApp.Service.DTO.ProjectDto;
+import br.com.MyProjectsApp.DTO.Employer.PersonalDataDto;
+import br.com.MyProjectsApp.DTO.ProjectDtoSlim;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -13,5 +13,5 @@ public class EmployerPostDTO {
     private PersonalDataDto personalData;
     @NotNull
     private EnterpriseDataPostDto enterpriseData;
-    private ProjectDto project;
+    private ProjectDtoSlim project;
 }

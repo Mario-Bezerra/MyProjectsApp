@@ -1,8 +1,7 @@
-package br.com.MyProjectsApp.Service.DTO.Employer.Get;
+package br.com.MyProjectsApp.DTO.Employer.Get;
 
-import br.com.MyProjectsApp.Service.DTO.Employer.PersonalDataDto;
-import br.com.MyProjectsApp.Service.DTO.ProjectDto;
-import br.com.MyProjectsApp.Service.DTO.ProjectDtoSlim;
+import br.com.MyProjectsApp.DTO.Employer.PersonalDataDto;
+import br.com.MyProjectsApp.DTO.ProjectDtoSlim;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

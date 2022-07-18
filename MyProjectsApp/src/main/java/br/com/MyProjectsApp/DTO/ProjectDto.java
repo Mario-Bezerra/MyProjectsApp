@@ -1,6 +1,6 @@
-package br.com.MyProjectsApp.Service.DTO;
+package br.com.MyProjectsApp.DTO;
 
-import br.com.MyProjectsApp.Service.DTO.Employer.Get.EmployerGetDTO;
+import br.com.MyProjectsApp.DTO.Employer.Get.EmployerGetDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

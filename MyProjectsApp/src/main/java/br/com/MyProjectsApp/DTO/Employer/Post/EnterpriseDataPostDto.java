@@ -1,6 +1,5 @@
-package br.com.MyProjectsApp.Service.DTO.Employer.Post;
+package br.com.MyProjectsApp.DTO.Employer.Post;
 
-import br.com.MyProjectsApp.Service.DTO.Employer.Get.EmployerGetDTO;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,6 +14,4 @@ public class EnterpriseDataPostDto {
     private String password;
     @NotNull
     private String cargo;
-    @NotNull
-    private EmployerGetDTO employer;
 }

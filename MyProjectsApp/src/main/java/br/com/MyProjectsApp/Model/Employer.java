@@ -5,20 +5,21 @@ import br.com.MyProjectsApp.Model.BaseModelEmployer.PersonalData;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Data
 @Entity
 public class Employer {
 
-    @Id @Column(name = "id", nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "personal_data_id")
+    @Embedded
     private PersonalData personalData;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "enterprise_data_id")
+    @Embedded
     private EnterpriseData enterpriseData;
     @ManyToOne
     private Project project;
+    @OneToMany
+    private Collection<Task> tasks;
 
 }
