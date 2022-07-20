@@ -7,14 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployerPostDTO {
 
     private Long id;
-    @NotNull
+    @NotBlank
     private PersonalDataDto personalData;
-    @NotNull
+    @NotBlank
     private EnterpriseDataPostDto enterpriseData;
     private ProjectDtoSlim project;
+
+    public EmployerPostDTO(PersonalDataDto personalData, EnterpriseDataPostDto enterpriseData) {
+        this.personalData = personalData;
+        this.enterpriseData = enterpriseData;
+    }
 }

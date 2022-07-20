@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Collection;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectDtoSlim {
 
     @JsonProperty("Id ")

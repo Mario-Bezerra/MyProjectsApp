@@ -1,5 +1,6 @@
 package br.com.MyProjectsApp.Service;
 
+import br.com.MyProjectsApp.Controller.Form.EmployerForm;
 import br.com.MyProjectsApp.DTO.Employer.Post.EmployerPostDTO;
 import br.com.MyProjectsApp.Mapper.EmployerMapper;
 import br.com.MyProjectsApp.Model.Employer;
@@ -8,7 +9,7 @@ import br.com.MyProjectsApp.DTO.Employer.Get.EmployerGetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,12 +22,9 @@ public class EmployerService {
     @Autowired
     private EmployerMapper employerMapper;
 
-    public EmployerGetDTO createEmployer(EmployerPostDTO employerPostDTO){
-        boolean verifyIfExistEmployer = verifyIfExistEmployer(employerPostDTO.getId());
-        if(verifyIfExistEmployer){
-            return null;
-        }
-        Employer employerForSave = employerMapper.employerDtoToEmployer(employerPostDTO);
+    public EmployerGetDTO createEmployer(@Valid EmployerForm form){
+        EmployerPostDTO employerPostDto = form.getEmployerPostDto();
+        Employer employerForSave = employerMapper.employerDtoToEmployer(employerPostDto);
         Employer savedEmployer = employerRepository.save(employerForSave);
         return employerMapper.employerToDto(savedEmployer);
     }

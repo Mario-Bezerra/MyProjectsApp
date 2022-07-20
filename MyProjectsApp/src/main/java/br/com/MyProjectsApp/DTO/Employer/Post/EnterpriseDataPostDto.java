@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class EnterpriseDataPostDto {
 
-    private Long id;
     @NotNull
     private String username;
     @NotNull

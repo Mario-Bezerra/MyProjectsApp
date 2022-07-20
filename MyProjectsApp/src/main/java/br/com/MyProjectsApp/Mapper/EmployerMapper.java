@@ -28,5 +28,7 @@ public interface EmployerMapper {
     EnderecoDto enderecoToDto(Endereco endereco);
     Endereco enderecoDtoToEndereco(EnderecoDto enderecoDto);
 
+    EmployerPostDTO employerGetToPost(EmployerPostDTO employerPostDTO);
+
 
 }
