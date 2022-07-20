@@ -2,6 +2,7 @@ package br.com.MyProjectsApp.DTO.Employer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -22,4 +23,5 @@ public class PersonalDataDto {
     @JsonProperty("birthDate")
     @NotNull
     private LocalDate dataDeNascimento;
+
 }
