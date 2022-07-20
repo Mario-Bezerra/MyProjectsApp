@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployerRepository extends JpaRepository<Employer, Long> {
+
+    Employer findByPersonalDataCpf(String cpf);
 }

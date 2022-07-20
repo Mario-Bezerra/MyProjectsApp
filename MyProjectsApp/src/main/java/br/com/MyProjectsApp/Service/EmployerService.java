@@ -23,6 +23,10 @@ public class EmployerService {
     private EmployerMapper employerMapper;
 
     public EmployerGetDTO createEmployer(@Valid EmployerForm form){
+        boolean verifyIfExistEmployer = verifyIfExistEmployer(form.getCpf());
+        if(verifyIfExistEmployer){
+            return null;
+        }
         EmployerPostDTO employerPostDto = form.getEmployerPostDto();
         Employer employerForSave = employerMapper.employerDtoToEmployer(employerPostDto);
         Employer savedEmployer = employerRepository.save(employerForSave);
@@ -35,11 +39,7 @@ public class EmployerService {
     }
 
     public void deleteEmployer(Long id){
-        if(verifyIfExistEmployer(id)){
-            employerRepository.deleteById(id);
-        }
-        return;
-
+        employerRepository.deleteById(id);
     }
 
     public List<EmployerGetDTO> getAll() {
@@ -51,19 +51,12 @@ public class EmployerService {
 
     public EmployerGetDTO getById(Long id){
         Optional<EmployerGetDTO> employerGetDTO = employerRepository.findById(id).map(employerMapper::employerToDto);
-        if (employerGetDTO.isPresent()){
-            return employerGetDTO.get();
-        }
-        return null;
+        return employerGetDTO.orElse(null);
     }
 
-    public boolean verifyIfExistEmployer(Long id) {
-        Optional<Employer> employerOptional = employerRepository.findById(id);
-        if (employerOptional.isPresent()){
-            return true;
-        }
-
-        return false;
+    public boolean verifyIfExistEmployer(String cpf) {
+        Optional<Employer> employerOptional = Optional.ofNullable(employerRepository.findByPersonalDataCpf(cpf));
+        return employerOptional.isPresent();
     }
 }
 
