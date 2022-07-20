@@ -21,8 +21,10 @@ public class Project {
     @OneToMany(fetch = FetchType.LAZY )
     private Collection<Employer> employers;
     private LocalDate timeCreated = LocalDate.now();
+    private String description;
 
-    public Project(String name) {
+    public Project(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 }

@@ -26,6 +26,13 @@ public class ProjectDto {
     private Collection<TaskDto> tasks;
     @JsonProperty("Employers")
     private Collection<EmployerGetDTO> employers;
+    @JsonProperty("Time created")
     private LocalDate timeCreated = LocalDate.now();
+    @JsonProperty("Description")
+    private String description;
 
+    public ProjectDto(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

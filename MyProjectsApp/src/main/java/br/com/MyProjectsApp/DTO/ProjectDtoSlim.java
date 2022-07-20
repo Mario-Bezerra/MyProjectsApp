@@ -18,6 +18,7 @@ public class ProjectDtoSlim {
     private String name;
     @JsonProperty("Time created ")
     private LocalDate timeCreated;
-
+    @JsonProperty("Description")
+    private String description;
 
 }

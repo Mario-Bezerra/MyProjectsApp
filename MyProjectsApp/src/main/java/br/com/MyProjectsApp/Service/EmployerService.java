@@ -33,10 +33,21 @@ public class EmployerService {
         return employerMapper.employerToDto(savedEmployer);
     }
 
-    public EmployerGetDTO updateAEmployer(Long id , EmployerPostDTO employer){
-        Employer employerDtoToEmployer = employerMapper.employerDtoToEmployer(employer);
-        employerRepository.save(employerDtoToEmployer);
-        return employerMapper.employerToDto(employerDtoToEmployer);
+    public EmployerGetDTO updateAEmployer(Long id , EmployerPostDTO employerPostDto){
+        Optional<Employer> optionalEmployer = employerRepository.findById(id);
+        if(optionalEmployer.isPresent()){
+            EmployerGetDTO employerGetDTO = updatingEmployer(optionalEmployer.get(), employerPostDto);
+            return employerGetDTO;
+        }
+        return null;
+    }
+
+    private EmployerGetDTO updatingEmployer(Employer employer, EmployerPostDTO employerPostDto) {
+        Employer employerToUpdate = employerMapper.employerDtoToEmployer(employerPostDto);
+        employer.setEnterpriseData(employerToUpdate.getEnterpriseData());
+        employer.setPersonalData(employerToUpdate.getPersonalData());
+        Employer savedEmployer = employerRepository.save(employer);
+        return employerMapper.employerToDto(savedEmployer);
     }
 
     public EmployerGetDTO deleteEmployer(Long id){
