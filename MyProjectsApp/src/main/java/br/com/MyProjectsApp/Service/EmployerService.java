@@ -1,6 +1,6 @@
 package br.com.MyProjectsApp.Service;
 
-import br.com.MyProjectsApp.Controller.Form.EmployerForm;
+import br.com.MyProjectsApp.Controller.Form.Employer.EmployerForm;
 import br.com.MyProjectsApp.DTO.Employer.Post.EmployerPostDTO;
 import br.com.MyProjectsApp.Mapper.EmployerMapper;
 import br.com.MyProjectsApp.Model.Employer;
@@ -33,13 +33,19 @@ public class EmployerService {
         return employerMapper.employerToDto(savedEmployer);
     }
 
-    public void updateAEmployer(Long id , EmployerPostDTO employer){
+    public EmployerGetDTO updateAEmployer(Long id , EmployerPostDTO employer){
         Employer employerDtoToEmployer = employerMapper.employerDtoToEmployer(employer);
         employerRepository.save(employerDtoToEmployer);
+        return employerMapper.employerToDto(employerDtoToEmployer);
     }
 
-    public void deleteEmployer(Long id){
-        employerRepository.deleteById(id);
+    public EmployerGetDTO deleteEmployer(Long id){
+        Optional<Employer> employerById = employerRepository.findById(id);
+        if(employerById.isPresent()){
+            employerRepository.deleteById(id);
+            return employerMapper.employerToDto(employerById.get());
+        }
+        return null;
     }
 
     public List<EmployerGetDTO> getAll() {
