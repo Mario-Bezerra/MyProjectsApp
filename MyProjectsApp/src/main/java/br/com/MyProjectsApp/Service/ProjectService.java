@@ -21,6 +21,7 @@ public class ProjectService {
     @Autowired
     private ProjectMapper projectMapper;
 
+    //create project
     public ProjectDto createProject(@Valid ProjectForm projectForm){
         boolean verifyIfExistProject = verifyIfExistProject(projectForm.getName());
         if(verifyIfExistProject){
@@ -40,15 +41,25 @@ public class ProjectService {
         return false;
     }
 
-    public void updateAEmployer(Long id , ProjectDto projectDto){
-        Project projectUpdated = projectMapper.projectDtoToProject(projectDto);
-        projectRepository.save(projectUpdated);
+    //update project
+    public ProjectDto updateProject(Long id , ProjectDto projectDto){
+        Optional<Project> optionalProject = projectRepository.findById(id);
+        if (optionalProject.isPresent()){
+            ProjectDto projectDtoUpdated = updatingProject(optionalProject.get(), projectDto);
+            return projectDtoUpdated;
+        }
+        return null;
     }
 
-    public void deleteEmployer(Long id){
-       return;
+    private ProjectDto updatingProject(Project project, ProjectDto projectDto) {
+        Project projectDtoToProject = projectMapper.projectDtoToProject(projectDto);
+        project.setDescription(projectDtoToProject.getDescription());
+        project.setName(projectDtoToProject.getName());
+        Project updatedProject = projectRepository.save(project);
+        return projectMapper.projectToProjectDto(updatedProject);
     }
 
+    //return all projects
     public List<ProjectDto> getAll() {
         return projectRepository.findAll()
                 .stream()
@@ -56,10 +67,21 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
+    //return a project by id
     public ProjectDto getById(Long id){
         Optional<ProjectDto> projectOptional = projectRepository.findById(id).map(projectMapper::projectToProjectDto);
         if (projectOptional.isPresent()){
             return projectOptional.get();
+        }
+        return null;
+    }
+
+    //delete a project by id
+    public ProjectDto deleteById(Long id){
+        Optional<Project> projectRepositoryById = projectRepository.findById(id);
+        if (projectRepositoryById.isPresent()){
+            projectRepository.deleteById(id);
+            return projectMapper.projectToProjectDto(projectRepositoryById.get());
         }
         return null;
     }
