@@ -23,7 +23,7 @@ public class ProjectDto {
     @JsonProperty("Name")
     private String name;
     @JsonProperty("Tasks")
-    private Collection<TaskDto> tasks;
+    private Collection<TaskDtoSlim> tasks;
     @JsonProperty("Employers")
     private Collection<EmployerGetDTO> employers;
     @JsonProperty("Time created")

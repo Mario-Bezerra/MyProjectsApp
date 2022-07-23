@@ -1,4 +1,4 @@
-/*package br.com.MyProjectsApp.Controller;
+package br.com.MyProjectsApp.Controller;
 
 import br.com.MyProjectsApp.Controller.Form.Project.ProjectForm;
 import br.com.MyProjectsApp.DTO.ProjectDto;
@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/projects")
+@RequestMapping("/api/v1/project")
 public class ProjectController {
 
     @Autowired
@@ -36,26 +36,29 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ProjectDto> postEmployer(@RequestBody @Valid ProjectForm form){
+    public ResponseEntity<ProjectDto> postProject(@RequestBody @Valid ProjectForm form){
 
-        ProjectDto employerSaved = projectService.createProject(form);
-        return ResponseEntity.ok(employerSaved);
+        ProjectDto projectSaved = projectService.createProject(form);
+        return ResponseEntity.ok(projectSaved);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ProjectDto> updateEmployer(@PathVariable(name = "id") Long id,
-                                                     @RequestBody @Valid EmployerForm employerForm){
-        EmployerPostDTO employerPostDTO = employerForm.getEmployerPostDto();
-        ProjectDto projectDto =
+                                                     @RequestBody @Valid ProjectForm form){
+        ProjectDto projectDto = form.formToProjectDto();
+        ProjectDto projectDtoUpdated = projectService.updateProject(id, projectDto);
+        if (projectDtoUpdated == null){
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(projectDto);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ProjectDto> deleteEmployer(@PathVariable(name = "id") Long id){
-        ProjectDto projectDto =
+        ProjectDto projectDto = projectService.deleteById(id);
         if(projectDto == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(projectDto);
     }
-}*/
+}

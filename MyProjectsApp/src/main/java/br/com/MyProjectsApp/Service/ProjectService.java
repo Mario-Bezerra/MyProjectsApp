@@ -80,8 +80,9 @@ public class ProjectService {
     public ProjectDto deleteById(Long id){
         Optional<Project> projectRepositoryById = projectRepository.findById(id);
         if (projectRepositoryById.isPresent()){
+            ProjectDto projectDeleted = projectMapper.projectToProjectDto(projectRepositoryById.get());
             projectRepository.deleteById(id);
-            return projectMapper.projectToProjectDto(projectRepositoryById.get());
+            return projectDeleted;
         }
         return null;
     }

@@ -1,7 +1,10 @@
 package br.com.MyProjectsApp.Service;
 
+import br.com.MyProjectsApp.Controller.Form.Task.TaskForm;
+import br.com.MyProjectsApp.DTO.ProjectDto;
 import br.com.MyProjectsApp.DTO.TaskDto;
 import br.com.MyProjectsApp.Mapper.TaskMapper;
+import br.com.MyProjectsApp.Model.Project;
 import br.com.MyProjectsApp.Model.Task;
 import br.com.MyProjectsApp.Repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +22,15 @@ public class TaskService {
     @Autowired
     private TaskMapper taskMapper;
 
-    public TaskDto addTask(TaskDto taskDto){
-        boolean verifyIfTaskExist = verifyIfTaskExist(taskDto.getId());
-        if (verifyIfTaskExist){
+    public TaskDto createTask(TaskForm taskForm){
+        boolean verifyIfExistProject = verifyIfExistProject(taskForm.getName());
+        if(verifyIfExistProject){
             return null;
         }
-        Task taskDtoToTask = taskMapper.taskDtoToTask(taskDto);
-        Task savedTask = taskRepository.save(taskDtoToTask);
-        return taskMapper.taskToDto(savedTask);
+        ProjectDto projectDto = projectForm.formToProjectDto();
+        Project projectForSave = projectMapper.projectDtoToProject(projectDto);
+        Project savedProject = projectRepository.save(projectForSave);
+        return projectMapper.projectToProjectDto(savedProject);
     }
 
     public boolean verifyIfTaskExist(Long id) {

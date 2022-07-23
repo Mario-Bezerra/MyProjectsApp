@@ -1,5 +1,6 @@
 package br.com.MyProjectsApp.Mapper;
 
+import br.com.MyProjectsApp.DTO.Employer.EmployerSlimDto;
 import br.com.MyProjectsApp.Model.BaseModelEmployer.Endereco;
 import br.com.MyProjectsApp.Model.BaseModelEmployer.EnterpriseData;
 import br.com.MyProjectsApp.Model.BaseModelEmployer.PersonalData;
@@ -29,6 +30,8 @@ public interface EmployerMapper {
     Endereco enderecoDtoToEndereco(EnderecoDto enderecoDto);
 
     EmployerPostDTO employerGetToPost(EmployerPostDTO employerPostDTO);
+
+    EmployerSlimDto employerSlim(Employer employer);
 
 
 }
