@@ -1,11 +1,12 @@
 package br.com.MyProjectsApp.Service;
 
 import br.com.MyProjectsApp.Controller.Form.Task.TaskForm;
-import br.com.MyProjectsApp.DTO.ProjectDto;
 import br.com.MyProjectsApp.DTO.TaskDto;
+import br.com.MyProjectsApp.Mapper.ProjectMapper;
 import br.com.MyProjectsApp.Mapper.TaskMapper;
 import br.com.MyProjectsApp.Model.Project;
 import br.com.MyProjectsApp.Model.Task;
+import br.com.MyProjectsApp.Repositories.ProjectRepository;
 import br.com.MyProjectsApp.Repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,35 +22,62 @@ public class TaskService {
     private TaskRepository taskRepository;
     @Autowired
     private TaskMapper taskMapper;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private ProjectMapper projectMapper;
 
     public TaskDto createTask(TaskForm taskForm){
-        boolean verifyIfExistProject = verifyIfExistProject(taskForm.getName());
-        if(verifyIfExistProject){
-            return null;
+        Optional<Project> optionalProject = projectRepository.findById(taskForm.getProjectId());
+        if(optionalProject.isPresent()){
+            boolean verifyIfExistProject = verifyIfTaskExist(taskForm.getName());
+            Project project = optionalProject.get();
+            if(verifyIfExistProject){
+                return null;
+            }
+            TaskDto taskDto = taskForm.taskFormByProjectToDto(project, projectMapper);
+            Task taskToSave = taskMapper.taskDtoToTask(taskDto);
+            Task taskSaved = taskRepository.save(taskToSave);
+            return taskMapper.taskToDto(taskSaved);
         }
-        ProjectDto projectDto = projectForm.formToProjectDto();
-        Project projectForSave = projectMapper.projectDtoToProject(projectDto);
-        Project savedProject = projectRepository.save(projectForSave);
-        return projectMapper.projectToProjectDto(savedProject);
+
+        return null;
     }
 
-    public boolean verifyIfTaskExist(Long id) {
+    public boolean verifyIfTaskExist(String name) {
+        Optional<Task> optionalTask = taskRepository.findByName(name);
+        return optionalTask.isPresent();
+    }
+
+    public TaskDto deleteTask(Long id){
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()){
-            return true;
+            TaskDto taskDto = taskMapper.taskToDto(optionalTask.get());
+            taskRepository.deleteById(id);
+            return taskDto;
         }
-        return false;
+        return null;
     }
 
-    public void deleteTask(Long id){
-        if (verifyIfTaskExist(id)){
-        taskRepository.deleteById(id);
+    public TaskDto updateTask(Long taskId , TaskForm taskForm){
+        Optional<Project> projectById = projectRepository.findById(taskForm.getProjectId());
+        if (projectById.isPresent()){
+            Project project = projectById.get();
+            TaskDto taskDto = taskForm.taskFormByProjectToDto(project, projectMapper);
+            Optional<Task> optionalTask = taskRepository.findById(taskId);
+            if (optionalTask.isPresent()){
+                TaskDto taskSaved = updatingTask(optionalTask.get(), taskDto);
+                return taskSaved;
+            }
         }
+        return null;
     }
 
-    public void updateTask(Long id , TaskDto taskDto){
-        Task taskUpdate = taskMapper.taskDtoToTask(taskDto);
-        taskRepository.save(taskUpdate);
+    private TaskDto updatingTask(Task task, TaskDto taskDto) {
+        task.setDescription(taskDto.getDescription());
+        task.setName(taskDto.getName());
+        taskRepository.save(task);
+        return taskMapper.taskToDto(task);
     }
 
     public List<TaskDto> getAll() {
@@ -61,10 +89,7 @@ public class TaskService {
 
     public TaskDto getById(Long id){
         Optional<TaskDto> taskRepositoryById = taskRepository.findById(id).map(taskMapper::taskToDto);
-        if(taskRepositoryById.isPresent()){
-            return taskRepositoryById.get();
-        }
+        return taskRepositoryById.orElse(null);
 
-        return null;
     }
 }
