@@ -11,6 +11,7 @@ import br.com.MyProjectsApp.Repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class TaskService {
     public TaskDto createTask(TaskForm taskForm){
         Optional<Project> optionalProject = projectRepository.findById(taskForm.getProjectId());
         if(optionalProject.isPresent()){
-            boolean verifyIfExistProject = verifyIfTaskExist(taskForm.getName());
+            boolean verifyIfExistProject = verifyIfTaskExist(taskForm.getName(), taskForm.getProjectId());
             Project project = optionalProject.get();
             if(verifyIfExistProject){
                 return null;
@@ -44,9 +45,15 @@ public class TaskService {
         return null;
     }
 
-    public boolean verifyIfTaskExist(String name) {
-        Optional<Task> optionalTask = taskRepository.findByName(name);
-        return optionalTask.isPresent();
+    public boolean verifyIfTaskExist(String name, @NotNull Long projectId) {
+        Optional<Project> projectOptional = projectRepository.findById(projectId);
+        if (projectOptional.isPresent()){
+            for (Task task : projectOptional.get().getTasks()) {
+                if (task.getName().equals(name)) return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     public TaskDto deleteTask(Long id){
@@ -66,8 +73,7 @@ public class TaskService {
             TaskDto taskDto = taskForm.taskFormByProjectToDto(project, projectMapper);
             Optional<Task> optionalTask = taskRepository.findById(taskId);
             if (optionalTask.isPresent()){
-                TaskDto taskSaved = updatingTask(optionalTask.get(), taskDto);
-                return taskSaved;
+                return updatingTask(optionalTask.get(), taskDto);
             }
         }
         return null;
