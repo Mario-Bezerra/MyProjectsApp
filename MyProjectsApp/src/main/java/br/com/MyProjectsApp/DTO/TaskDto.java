@@ -18,11 +18,11 @@ public class TaskDto {
     @NotNull
     @JsonProperty("Project")
     private ProjectDtoSlim project;
-    @JsonProperty("Dev")
+    @JsonProperty("Employer")
     private EmployerSlimDto devEncarregado;
     @JsonProperty("Status")
     private Status status;
-    @JsonProperty("Time created ")
+    @JsonProperty("TimeCreated ")
     private LocalDate timeCreated;
     @JsonProperty("Description") @NotNull
     private String description;

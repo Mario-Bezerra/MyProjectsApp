@@ -12,11 +12,11 @@ import java.util.Collection;
 @AllArgsConstructor
 public class ProjectDtoSlim {
 
-    @JsonProperty("Id ")
+    @JsonProperty("Id")
     private Long id;
-    @JsonProperty("Name ")
+    @JsonProperty("Name")
     private String name;
-    @JsonProperty("Time created ")
+    @JsonProperty("TimeCreated")
     private LocalDate timeCreated;
     @JsonProperty("Description")
     private String description;

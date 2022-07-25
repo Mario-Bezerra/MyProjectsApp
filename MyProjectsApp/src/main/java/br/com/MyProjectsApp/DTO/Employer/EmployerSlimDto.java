@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 public class EmployerSlimDto {
 
     private Long id;
-    @JsonProperty("Personal Data")
+    @JsonProperty("PersonalData")
     private PersonalDataSlim personalData;
-    @JsonProperty("Enterprise Data")
+    @JsonProperty("EnterpriseData")
     private EnterpriseDataSlimDto enterpriseData;
 }

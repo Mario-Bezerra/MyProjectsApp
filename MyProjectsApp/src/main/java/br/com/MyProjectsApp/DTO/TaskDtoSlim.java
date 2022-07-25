@@ -17,10 +17,10 @@ public class TaskDtoSlim {
     private String name;
     @JsonProperty("Description")
     private String description;
-    @JsonProperty("Dev")
+    @JsonProperty("Employer")
     private EmployerSlimDto devEncarregado;
     @JsonProperty("Status")
     private Status status;
-    @JsonProperty("Time created ")
+    @JsonProperty("TimeCreated")
     private LocalDate timeCreated;
 }

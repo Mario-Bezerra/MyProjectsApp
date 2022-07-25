@@ -26,7 +26,7 @@ public class ProjectDto {
     private Collection<TaskDtoSlim> tasks;
     @JsonProperty("Employers")
     private Collection<EmployerGetDTO> employers;
-    @JsonProperty("Time created")
+    @JsonProperty("TimeCreated")
     private LocalDate timeCreated = LocalDate.now();
     @JsonProperty("Description")
     private String description;

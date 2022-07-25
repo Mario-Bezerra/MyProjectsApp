@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 public class EmployerGetDTO {
 
     private Long id;
-    @NotNull @JsonProperty("Personal Data")
+    @NotNull @JsonProperty("PersonalData")
     private PersonalDataDto personalData;
-    @NotNull @JsonProperty("Enterprise Data")
+    @NotNull @JsonProperty("EnterpriseData")
     private EnterpriseDataGetDto enterpriseData;
     @JsonProperty("Project")
     private ProjectDtoSlim project;
